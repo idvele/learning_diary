@@ -34,7 +34,7 @@ namespace Learning_Diary_IK
        
         }
 
-        
+        //Lorem ipsum this is a comment for GitHub test
 
         public static Topic kysymykset()
         {
