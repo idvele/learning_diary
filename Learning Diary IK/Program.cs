@@ -13,6 +13,7 @@ namespace Learning_Diary_IK
             // Kysymykset on nyt metodina, sen tulokset voisi tallentaa ArrayListiin josta saa tehtyä metodin, jolla tulokset on helppoa printata
             //tee main menu jossa lisätään uusia osia topicceihin tai printataan topicit i määrittää ...
             //This is a test comment
+            //This is also a test
             List<Topic> topics = new List<Topic>();
 
             topics.Add(kysymykset());
