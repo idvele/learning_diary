@@ -128,7 +128,7 @@ namespace Learning_Diary_IK
 
             //    else
             //        Console.WriteLine($"{str} is not a valid date string");
-
+            ////Tämä toimimaan niin, että mikäli completiong date= NUll tämä on false
             //    Console.WriteLine("Enter in progress?(1 = yes 2= no : ");
 
             //    string answer = Console.ReadLine();
