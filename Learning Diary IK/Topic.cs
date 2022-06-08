@@ -17,7 +17,13 @@ namespace Learning_Diary_IK
 
 
         //override mahdollistaa komennon tekemisen classin nimellä
-       
+       public string Write()
+        {
+            string entrys = String.Format("Id {0}, Title {1}, Description {2}, " +
+                "Estimated time to master {3}, Time Spent {4}", Id, Title, Description, EstimatedTimeToMaster, TimeSpent);
+
+            return entrys;
+         }
 
     }
 }
