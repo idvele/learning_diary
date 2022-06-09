@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Learning Diary IK", "Learni
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "8.6 Shoppinglist", "..\..\8.6 Shoppinglist\8.6 Shoppinglist\8.6 Shoppinglist.csproj", "{21CE9545-F2E1-466C-823B-3AE45883A6B9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testi2", "testi2\testi2.csproj", "{747220BE-D109-4869-B77A-50E1BBC1B450}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{21CE9545-F2E1-466C-823B-3AE45883A6B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21CE9545-F2E1-466C-823B-3AE45883A6B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21CE9545-F2E1-466C-823B-3AE45883A6B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{747220BE-D109-4869-B77A-50E1BBC1B450}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{747220BE-D109-4869-B77A-50E1BBC1B450}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{747220BE-D109-4869-B77A-50E1BBC1B450}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{747220BE-D109-4869-B77A-50E1BBC1B450}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
