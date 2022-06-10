@@ -63,9 +63,14 @@ namespace Learning_Diary_IK
                                     + "Source = {5}\n"
                                     + "Start time = {6}\n"
                                     + "In progress = {7}\n"
-                                    + "Completion date = {8}\n"
+                                    
                                     , item.Id, item.Title, item.Description, item.EstimatedTimeToMaster, item.TimeSpent
-                                    ,item.Source, item.StartLearningDate, item.inProgress, item.CompletionDate);
+                                    ,item.Source, item.StartLearningDate.ToShortDateString(), item.inProgress);
+
+                                    if (item.inProgress == false)
+                                    Console.WriteLine(" \n" + "CompletionDate = " + item.CompletionDate.ToShortDateString()); 
+                               
+
 
                                 writeToFile(item.Id, item.Title, item.Description, item.EstimatedTimeToMaster, item.TimeSpent
                                     , item.Source, item.StartLearningDate, item.inProgress, item.CompletionDate);
@@ -96,7 +101,7 @@ namespace Learning_Diary_IK
         public static Topic kysymykset()
         {
 
-
+            //muuta osa kysymyksistä ohjelmallisiksi
 
 
             Topic mytopic = new Topic();
@@ -110,57 +115,90 @@ namespace Learning_Diary_IK
             Console.WriteLine("Enter Description: ");
             mytopic.Description = Console.ReadLine();
 
-            Console.WriteLine("Enter ETA to master: ");
+            Console.WriteLine("Enter ETA to masterin hours: ");
             mytopic.EstimatedTimeToMaster = double.Parse(Console.ReadLine());
 
-            Console.WriteLine("Enter Time spent: ");
+            Console.WriteLine("Enter Time spent in hours: ");
             mytopic.TimeSpent = double.Parse(Console.ReadLine());
 
             Console.WriteLine("Enter Source: ");
             mytopic.Source = Console.ReadLine();
 
 
-            Console.WriteLine("Enter start learning date as dd/mm/yyyy: ");
-            var str = Console.ReadLine();
-            DateTime dt;
+            Console.WriteLine("Enter when you started studying dd,mm,yyyy : ");
 
-            var isValidDate = DateTime.TryParse(str, out dt);
-
-            if (isValidDate)
+            bool i = false;
+            while (i == false)
             {
-                Console.WriteLine(mytopic.StartLearningDate);
-                mytopic.StartLearningDate = dt;
+                try
+                {
+                    DateTime date = Convert.ToDateTime(Console.ReadLine());
+                    mytopic.StartLearningDate = date;
+                    Console.WriteLine(date.ToShortDateString());
+                    i = true;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("ERROR: Enter correct format");
+                    
+                }
             }
+           
+            
+           
+            Console.WriteLine("Enter in progress?(1 = yes 2= no): ");
 
-            else
-                Console.WriteLine($"{str} is not a valid date string");
-            //Tämä toimimaan niin, että mikäli completiong date= NUll tämä on false
-            Console.WriteLine("Enter in progress?(1 = yes 2= no : ");
+   
 
             string answer = Console.ReadLine();
-            if (answer == "1")
-                mytopic.inProgress = true;
-            else if (answer == "2")
-                mytopic.inProgress = false;
-            else
-                mytopic.inProgress = false;
-
-            Console.WriteLine("Enter completion date as dd/mm/yyyy: ");
-            var str1 = Console.ReadLine();
-            DateTime dt1;
-
-            var isValidDate1 = DateTime.TryParse(str, out dt);
-
-            if (isValidDate)
+            if (answer == "2")
             {
-                Console.WriteLine(mytopic.CompletionDate);
-                mytopic.CompletionDate = dt;
+                mytopic.inProgress = false;
+
+                bool p = false;
+                Console.WriteLine("Enter completion date as dd,mm,yyyy: ");
+                while (p == false)
+                {
+                    try
+                    {
+                        DateTime date1 = Convert.ToDateTime(Console.ReadLine());
+                        mytopic.CompletionDate = date1;
+                        Console.WriteLine(date1.ToShortDateString());
+                        p = true;
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("ERROR: Enter correct format");
+
+                    }
+                }
             }
 
+            else if (answer == "1")
+                mytopic.inProgress = true;
+            
             else
-                Console.WriteLine($"{str} is not a valid date string");
+                mytopic.inProgress = false;
+
+            
 
 
+            //var str1 = Console.ReadLine();
+            //DateTime dt1;
+
+            //var isValidDate1 = DateTime.TryParse(str1, out dt1);
+
+            //if (isValidDate1)
+            //{
+            //    Console.WriteLine(mytopic.CompletionDate);
+            //    mytopic.CompletionDate = dt1;
+            //}
+
+            //else
+            //    Console.WriteLine($"{str1} is not a valid date string");
+
+            
+            
 
             return mytopic;
 
@@ -181,13 +219,16 @@ namespace Learning_Diary_IK
                   + " \n" + "ETA to master = " + EstimatedTimeToMaster.ToString()
                   + " \n" + "Time Spent = " + TimeSpent.ToString()
                   + " \n" + "Source = " + Source
-                  + " \n" + "Start learning date = " + StartLearningDate.ToString()
-                  + " \n" + "inProgress = " + inProgress.ToString()
-                  + " \n" + "CompletionDate = " + CompletionDate.ToString();
+                  + " \n" + "Start learning date = " + StartLearningDate.ToShortDateString()
+                  + " \n" + "inProgress = " + inProgress.ToString();
+            //print the completion date only if subject is not in progress
+            string completionDate;
+            if (inProgress == false)
+                completionDate = " \n" + "CompletionDate = " + CompletionDate.ToShortDateString();
+            else completionDate = null;
 
 
-
-            File.AppendAllText(path, print + Environment.NewLine+ Environment.NewLine);
+            File.AppendAllText(path, print+ completionDate + Environment.NewLine+ Environment.NewLine);
 
 
         }
