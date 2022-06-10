@@ -12,9 +12,10 @@ namespace Learning_Diary_IK
         static void Main(string[] args)
         {
 
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine("`^*Welcome to Ilari's learning diary^*`´");
+            Console.WriteLine("----------------------------------------");
 
-
-            
             string input;
 
             List<Topic> diaryEntrys = new List<Topic>();
@@ -22,8 +23,8 @@ namespace Learning_Diary_IK
             {
 
 
-                Console.WriteLine("This is a learning diary");
-                Console.WriteLine("Press 1 to add an item to diary, press 2 to print whole diary");
+                
+                Console.WriteLine("Press 1 to add an item to diary\nPress 2 to print whole diary\nPress 3 to quit ");
 
 
                 {
@@ -36,24 +37,17 @@ namespace Learning_Diary_IK
 
 
                             diaryEntrys.Add(kysymykset());
-                            //Console.WriteLine(inputCounter);
-                            //Topic inputcounter = new Topic();
-
-                            //Console.WriteLine("Enter topic ID: ");
-                            //inputcounter.Id = int.Parse(Console.ReadLine());
-
-                            //Console.WriteLine("Enter title");
-                            //inputcounter.Title = (Console.ReadLine());
-
-                            //diaryEntrys.Add(inputcounter);
-                            //inputCounter++;
+                            
                             break;
 
                         case "2":
+                            Console.Clear();
+
                             int inputCounter = 1;
                             foreach (var item in diaryEntrys)
                             {
 
+                                Console.WriteLine("---------------------------------------------");
                                 Console.WriteLine("Tässä listan {0} kaikki inputit", inputCounter);
                                 Console.WriteLine("ID = {0}\n" +
                                     "Title = {1}\n" 
@@ -76,14 +70,18 @@ namespace Learning_Diary_IK
                                     , item.Source, item.StartLearningDate, item.inProgress, item.CompletionDate);
 
                                 inputCounter++;
+                                
                             }
+                           
                             Console.ReadKey();
+                            break;
+                        case "3":
                             break;
 
                     }
                 }
 
-            } while (input == "1");
+            } while (input != "3");
 
 
 
@@ -106,20 +104,43 @@ namespace Learning_Diary_IK
 
             Topic mytopic = new Topic();
 
+            bool t;
             Console.Write("Enter topic Id: ");
-            mytopic.Id = int.Parse(Console.ReadLine());
+            do 
+            {   t = int.TryParse(Console.ReadLine(), out int a);
+                if (t) mytopic.Id = a;
+                else Console.WriteLine("ERROR: Enter a number");
+            } while (t==false);
+            
+            
+
 
             Console.WriteLine("Enter Title: ");
             mytopic.Title = Console.ReadLine();
 
             Console.WriteLine("Enter Description: ");
             mytopic.Description = Console.ReadLine();
-
+           
+            bool e;
             Console.WriteLine("Enter ETA to masterin hours: ");
-            mytopic.EstimatedTimeToMaster = double.Parse(Console.ReadLine());
+            do
+            {
+                e = double.TryParse(Console.ReadLine(), out double a);
+                if (e) mytopic.EstimatedTimeToMaster = a;
+                else Console.WriteLine("ERROR: Enter a number");
 
+            } while (e==false);
+
+                                    
+            bool h;
             Console.WriteLine("Enter Time spent in hours: ");
-            mytopic.TimeSpent = double.Parse(Console.ReadLine());
+            do
+            {
+                h = double.TryParse(Console.ReadLine(), out double a);
+                if (h) mytopic.TimeSpent = a;
+                else Console.WriteLine("ERROR: Enter a number");
+
+            } while (h == false);
 
             Console.WriteLine("Enter Source: ");
             mytopic.Source = Console.ReadLine();
@@ -178,28 +199,9 @@ namespace Learning_Diary_IK
                 mytopic.inProgress = true;
             
             else
-                mytopic.inProgress = false;
-
-            
-
-
-            //var str1 = Console.ReadLine();
-            //DateTime dt1;
-
-            //var isValidDate1 = DateTime.TryParse(str1, out dt1);
-
-            //if (isValidDate1)
-            //{
-            //    Console.WriteLine(mytopic.CompletionDate);
-            //    mytopic.CompletionDate = dt1;
-            //}
-
-            //else
-            //    Console.WriteLine($"{str1} is not a valid date string");
-
-            
-            
-
+                mytopic.inProgress = false;           
+                  
+           
             return mytopic;
 
         }
@@ -213,7 +215,8 @@ namespace Learning_Diary_IK
             string path = @"C:\Users\ilari\source\repos\AW academy kurssitehtävät\learning diary Ik\teksti.txt";
 
 
-            string print = "ID = " + Id.ToString()
+            string print = "------------------"+
+                "\n" + "ID = " + Id.ToString()
                 + " \n" + "Title = " + title
                   + " \n" + "Description = " + Description
                   + " \n" + "ETA to master = " + EstimatedTimeToMaster.ToString()
@@ -226,7 +229,6 @@ namespace Learning_Diary_IK
             if (inProgress == false)
                 completionDate = " \n" + "CompletionDate = " + CompletionDate.ToShortDateString();
             else completionDate = null;
-
 
             File.AppendAllText(path, print+ completionDate + Environment.NewLine+ Environment.NewLine);
 

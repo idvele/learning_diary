@@ -46,3 +46,65 @@ Source = asd
 Start learning date = 01/01/2000 
 inProgress = True
 
+ID = 1 
+Title = a 
+Description = a 
+ETA to master = 2 
+Time Spent = 3 
+Source = ad 
+Start learning date = 01/02/2000 
+inProgress = False 
+CompletionDate = 01/02/2000
+
+------------------
+ID = 1 
+Title = asd 
+Description = afweaf 
+ETA to master = 4 
+Time Spent = 2 
+Source = wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww 
+Start learning date = 11/12/2000 
+inProgress = False 
+CompletionDate = 12/12/2000
+
+
+ID = 1 
+Title = asd 
+Description = asd 
+ETA to master = 4 
+Time Spent = 5 
+Source = 12312qwewqe 
+Start learning date = 11/12/1222 
+inProgress = True
+
+------------------
+ID = 1 
+Title = asd 
+Description = asd 
+ETA to master = 1 
+Time Spent = 1 
+Source = 1 
+Start learning date = 01/01/1111 
+inProgress = True
+
+------------------
+ID = 1 
+Title = asd 
+Description = asd 
+ETA to master = 1 
+Time Spent = 1 
+Source = 1 
+Start learning date = 01/01/1111 
+inProgress = True
+
+------------------
+ID = 2 
+Title = 2 
+Description = 2 
+ETA to master = 2 
+Time Spent = 2 
+Source = 2 
+Start learning date = 02/02/2222 
+inProgress = False 
+CompletionDate = 02/02/2222
+
