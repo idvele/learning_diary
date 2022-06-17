@@ -148,3 +148,44 @@ Source = c
 Start learning date = 11/11/1111 
 inProgress = True
 
+------------------
+ID = 1 
+Title = NewTitle 
+Description = s 
+ETA to master = 4 
+Time Spent = 5 
+Source = www 
+Start learning date = 11/12/3232 
+inProgress = True
+
+------------------
+ID = 1 
+Title = NewTitle 
+Description = s 
+ETA to master = 4 
+Time Spent = 5 
+Source = www 
+Start learning date = 11/12/2000 
+inProgress = True
+
+------------------
+ID = 1 
+Title = NewTitle 
+Description = s 
+ETA to master = 4 
+Time Spent = 5 
+Source = www 
+Start learning date = 11/12/2000 
+inProgress = False 
+CompletionDate = 01/01/0001
+
+------------------
+ID = 1 
+Title = a 
+Description = s 
+ETA to master = 4 
+Time Spent = 5 
+Source = www 
+Start learning date = 11/12/2000 
+inProgress = True
+

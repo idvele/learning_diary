@@ -21,14 +21,13 @@ namespace Learning_Diary_IK
 
             string input;
 
-            //TODO: Tee dictionary title-ID pareilla jolla haet Title->ID->class
-
+            
             do
             {
 
 
 
-                Console.WriteLine("Press 1 to add an item to diary\nPress 2 to print whole diary\nPress 3 to search subject via ID\nPress 4 to quit\nPress 5 to edit an item  ");
+                Console.WriteLine("Press 1 to add an item to diary\nPress 2 to print whole diary\nPress 3 to search subject via ID\nPress 4 to quit\n press 5 to delete a topic");
 
 
                 {
@@ -71,7 +70,7 @@ namespace Learning_Diary_IK
                                     , haku.Source, haku.StartLearningDate.ToShortDateString(), haku.inProgress);
 
                                 if (haku.inProgress == false)
-                                    Console.WriteLine(" \n" + "CompletionDate = " + haku.CompletionDate.ToShortDateString());
+                                    Console.WriteLine("CompletionDate = " + haku.CompletionDate.ToShortDateString());
 
 
 
@@ -128,7 +127,7 @@ namespace Learning_Diary_IK
 
 
 
-
+                           
 
 
                             break;
@@ -140,9 +139,7 @@ namespace Learning_Diary_IK
                         case "4":
                             break;
 
-                        case "5":
-                            update();
-                                break;
+                       
 
                     }
                 }
@@ -311,7 +308,8 @@ namespace Learning_Diary_IK
                 Console.WriteLine("CompletionDate = " + s.CompletionDate.ToShortDateString());
 
 
-            Console.Write("Press 1 to edit topic: ");
+            Console.Write("Press 1 to edit topic and 2 to delete a topic: ");
+            
             var inputti = Console.ReadKey();
             if (inputti.KeyChar == '1')
             {
@@ -333,14 +331,65 @@ namespace Learning_Diary_IK
                     case 0:
                         Console.Write("Enter a new ID: ");
                         int newID = int.Parse(Console.ReadLine());
+                        s.Id = newID;
                         //korvaa s-classista id
+                        break;
+
+                    case 1:
+                        Console.WriteLine("Enter a new title: ");
+                        string newTitle = Console.ReadLine();
+                        s.Title = newTitle;
+                        break;
+                        
+                    case 2:
+                        Console.WriteLine("Enter a new description: ");
+                        string newDesc = Console.ReadLine();
+                        s.Description = newDesc;
+                        break;
+                        
+                    case 3:
+                        Console.WriteLine("Enter a eta tom master: ");
+                        int newETA = int.Parse(Console.ReadLine());
+                        s.EstimatedTimeToMaster = newETA; 
+                        break;
+                        
+                    case 4:
+                        Console.WriteLine("Enter a new Time spent: ");
+                        int newTimeSpent = int.Parse(Console.ReadLine());
+                        s.TimeSpent = newTimeSpent;
+                        break;
+                        
+                    case 5:
+                        Console.WriteLine("Enter a new Source: ");
+                        string newSource = Console.ReadLine();
+                        s.Source = newSource;
+                        break;
+                        
+                    case 6:
+                        Console.WriteLine("Enter a new Start time: ");
+                        DateTime newStart = DateTime.Parse(Console.ReadLine());
+                        s.StartLearningDate = newStart;
+                        break;
+                        
+                    case 7:
+                        Console.WriteLine("Enter a new value to in progress: ");
+                        bool newInProg = bool.Parse(Console.ReadLine());
+                        s.inProgress = newInProg;
+                        break;
+                        
+                    case 8:
+                        Console.WriteLine("Enter a new completion date: ");
+                        DateTime newEnd = DateTime.Parse(Console.ReadLine());
+                        s.CompletionDate = newEnd;
                         break;
 
 
                 }
+                }
 
-                    
-
+            if (inputti.KeyChar == '2')
+            {
+                diaryEntrys.Remove(search);
             }
             
                 
@@ -380,186 +429,9 @@ namespace Learning_Diary_IK
 
         }
 
-        //public delegate void ChooseUpdate(int c);
-        public static void update()
-        {
-            Console.WriteLine("Choose a list to update by 1) ID 2) Title:");
-
-            String input3 = Console.ReadLine();
-
-            switch (input3)
-            {
-                case "1":
-                    Console.Write("ID: ");
-                    int searchID = (int.Parse(Console.ReadLine()));
-                    searchById(searchID);
-
-                    Console.WriteLine("Enter a subject to change:");
-                    Console.WriteLine("ID: 0\n" +
-                "Title: 1\n"
-                + "Description: 2\n"
-                + "ETA to master: 3\n"
-                + "Time Spent: 4\n"
-                + "Source: 5\n"
-                + "Start time: 6\n"
-                + "In progress: 7\n"
-                + "CompletionDate: 8");
-                    int subject = int.Parse(Console.ReadLine());
-                    switch (subject)
-                    {
-                        case 0:
-                           
-                            updateId(searchID);
-
-                            break;
-                        case 1:
-                            break;
-                        case 2:
-                            break;
-                        case 3:
-                            break;
-                        case 4:
-                            break;
-                        case 5:
-                            break;
-                        case 6:
-                            break;
-                        case 7:
-                            break;
-                        case 8:
-                            break;
-                    }
-
-
-
-
-                    //ChooseUpdate update1 = new ChooseUpdate(updateId);
-
-
-                    //onko ainoa mahdollisuus päivittää koko topic, vai voiko yhtä arvoa käpistellä?
-
-
-
-                    //var newInput = Console.ReadLine();
-                    //haettuTopic.Aihe = newInput;
-
-                    
-
-                    break;
-                case "2":
-
-
-                    break;
-            }
-
-             
-                   
-
-
-
-
-
-        }
-
-        public static void updateId(int searchId)
-        {
-            Console.WriteLine("Enter a new Id");
-            int newId = int.Parse(Console.ReadLine());
-
-            Topic s = null;
-            diaryEntrys.TryGetValue(searchId, out s);
-
-            s.Id = newId;
-
-            diaryEntrys[searchId] = s;
-
-        }
-           
-
-        public static void updateDescription(int searchID)
-        {
-            Console.WriteLine("Enter a new Description: ");
-            string NewDescription = Console.ReadLine();
-
-            Topic s = null;
-            diaryEntrys.TryGetValue(searchID, out s);
-
-            s.Description = NewDescription;
-
-            diaryEntrys[searchID] = s;
-        }
-        public static void updateETA(int searchID)
-
-        {
-            Console.WriteLine("Enter a new ETA to master: ");
-            int New = int.Parse(Console.ReadLine());
-
-            Topic s = null;
-            diaryEntrys.TryGetValue(searchID, out s);
-
-            s.EstimatedTimeToMaster = New;
-
-            diaryEntrys[searchID] = s;
-        }
-        public static void updateTimeSpent(int searchID)
-        {
-            Console.WriteLine("Enter a new value to Spent time: ");
-            int NewDescription = int.Parse(Console.ReadLine());
-
-            Topic s = null;
-            diaryEntrys.TryGetValue(searchID, out s);
-
-            s.TimeSpent = NewDescription;
-
-            diaryEntrys[searchID] = s;
-        }
-        public static void updateSource(int searchID)
-        {
-            Console.WriteLine("Enter a new Source: ");
-            string NewSource = Console.ReadLine();
-
-            Topic s = null;
-            diaryEntrys.TryGetValue(searchID, out s);
-
-            s.Description = NewDescription;
-
-            diaryEntrys[searchID] = s;
-        }
-        public static void updateStartTime(int searchID)
-        {
-            Console.WriteLine("Enter a new Description: ");
-            string NewDescription = Console.ReadLine();
-
-            Topic s = null;
-            diaryEntrys.TryGetValue(searchID, out s);
-
-            s.Description = NewDescription;
-
-            diaryEntrys[searchID] = s;
-        }
-        public static void updateInProgress(int searchID)
-        {
-            Console.WriteLine("Enter a new Description: ");
-            string NewDescription = Console.ReadLine();
-
-            Topic s = null;
-            diaryEntrys.TryGetValue(searchID, out s);
-
-            s.Description = NewDescription;
-
-            diaryEntrys[searchID] = s;
-        }
-        public static void updateCompletionDate(int searchID)
-        {
-            Console.WriteLine("Enter a new Description: ");
-            string NewDescription = Console.ReadLine();
-
-            Topic s = null;
-            diaryEntrys.TryGetValue(searchID, out s);
-
-            s.Description = NewDescription;
-
-            diaryEntrys[searchID] = s;
+       
+      
         }
     }
-    }
+    
+
