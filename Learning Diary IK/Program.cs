@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Learning_Diary_IK.Models;
 
 
 namespace Learning_Diary_IK
@@ -14,6 +15,7 @@ namespace Learning_Diary_IK
 
         static void Main(string[] args)
         {
+            //Tähän tulee databasen lataus
 
             Console.WriteLine("----------------------------------------");
             Console.WriteLine("`^*Welcome to Ilari's learning diary^*`´");
@@ -27,7 +29,7 @@ namespace Learning_Diary_IK
 
 
 
-                Console.WriteLine("Press 1 to add an item to diary\nPress 2 to print whole diary\nPress 3 to search subject via ID\nPress 4 to quit\n press 5 to delete a topic");
+                Console.WriteLine("Press 1 to add an item to diary\nPress 2 to print whole diary\nPress 3 to search subject via ID\nPress 4 to save and exit\n press 5 to delete a topic");
 
 
                 {
@@ -134,9 +136,34 @@ namespace Learning_Diary_IK
 
                         
                             
-                            //exit
+                            //Save and exit
 
                         case "4":
+
+                            //tähän tulee databasen tallennus
+
+                            using (var LearningDiary = new LearningDiaryContext())
+                            {
+                                //Jokaiselle tällä kerralla luodulle topicille tehdään tallennus
+                                foreach (var item in diaryEntrys)
+                                {
+                                    Topic s = null;
+                                    diaryEntrys.TryGetValue(item.Key, out s);
+
+
+                                    //tee tietokantaolioita ja lisäile niitä
+                                    //uusi lisäys
+                                    LearningDiary.Topics.Add(s);
+                                     
+
+                                    //update
+
+                                }
+                                //ongelmana tuplat
+                                //tarkista ID:llä onko Id:tä jo tietokannassa, jos ID, tee update jos ei, uusi input
+                            }
+
+
                             break;
 
                        
