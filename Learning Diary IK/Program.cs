@@ -31,6 +31,8 @@ namespace Learning_Diary_IK
                 foreach (var topic in kaikki)
                 {
                     diaryEntrysModels.Add(topic.Id, topic);
+                    IdTitlePairs.Add(topic.Title, topic.Id);
+                    
                 }
             }
 
