@@ -7,15 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Learning Diary IK", "Learni
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "8.6 Shoppinglist", "..\..\8.6 Shoppinglist\8.6 Shoppinglist\8.6 Shoppinglist.csproj", "{21CE9545-F2E1-466C-823B-3AE45883A6B9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "testi2", "testi2\testi2.csproj", "{747220BE-D109-4869-B77A-50E1BBC1B450}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "testi3", "testi3\testi3.csproj", "{0253EEC0-BC99-48B6-9D48-76163310B391}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enum", "Enum\Enum.csproj", "{16AA91A4-433B-4BE7-B286-DB6E29C9A07D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collections ja GRUD", "..\..\Collections ja GRUD\Collections ja GRUD\Collections ja GRUD.csproj", "{8BF57EF2-D210-4D41-B353-94EFCDF7112C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Peoples-harjoitus w2 d2", "..\..\Peoples-harjoitus w2 d2\Peoples-harjoitus w2 d2\Peoples-harjoitus w2 d2.csproj", "{A23A835B-9FC1-468C-AA90-0F9C0554FF49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,14 +25,6 @@ Global
 		{21CE9545-F2E1-466C-823B-3AE45883A6B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21CE9545-F2E1-466C-823B-3AE45883A6B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21CE9545-F2E1-466C-823B-3AE45883A6B9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{747220BE-D109-4869-B77A-50E1BBC1B450}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{747220BE-D109-4869-B77A-50E1BBC1B450}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{747220BE-D109-4869-B77A-50E1BBC1B450}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{747220BE-D109-4869-B77A-50E1BBC1B450}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0253EEC0-BC99-48B6-9D48-76163310B391}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0253EEC0-BC99-48B6-9D48-76163310B391}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0253EEC0-BC99-48B6-9D48-76163310B391}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0253EEC0-BC99-48B6-9D48-76163310B391}.Release|Any CPU.Build.0 = Release|Any CPU
 		{16AA91A4-433B-4BE7-B286-DB6E29C9A07D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{16AA91A4-433B-4BE7-B286-DB6E29C9A07D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16AA91A4-433B-4BE7-B286-DB6E29C9A07D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -47,10 +33,6 @@ Global
 		{8BF57EF2-D210-4D41-B353-94EFCDF7112C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BF57EF2-D210-4D41-B353-94EFCDF7112C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BF57EF2-D210-4D41-B353-94EFCDF7112C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A23A835B-9FC1-468C-AA90-0F9C0554FF49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A23A835B-9FC1-468C-AA90-0F9C0554FF49}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A23A835B-9FC1-468C-AA90-0F9C0554FF49}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A23A835B-9FC1-468C-AA90-0F9C0554FF49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

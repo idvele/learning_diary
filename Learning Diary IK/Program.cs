@@ -11,13 +11,35 @@ namespace Learning_Diary_IK
     {
         public static int GlobalID = 1;
         public static Dictionary<int, Topic> diaryEntrys = new Dictionary<int, Topic>();
+        public static Dictionary<int, Models.Topic> diaryEntrysModels = new Dictionary<int, Models.Topic>();
         public static Dictionary<string, int> IdTitlePairs = new Dictionary<string, int>();
 
         static void Main(string[] args)
         {
             //Tähän tulee databasen lataus
+            using (var LearningDiary = new LearningDiaryContext())
+            {
+                var taulu = LearningDiary.Topics.Max(topikki => topikki.Id);
 
-            Console.WriteLine("----------------------------------------");
+
+                GlobalID = taulu;
+                GlobalID++;
+
+                //Kaikki tietokannassa olevat objektit lisätään diaryEntrysModels-dictionaryyn
+                var kaikki = LearningDiary.Topics;
+
+                foreach (var topic in kaikki)
+                {
+                    diaryEntrysModels.Add(topic.Id, topic);
+                }
+            }
+
+            //DiaryEntrysModels-dictionary siirretään DiaryEntrys-dictionaryyn
+
+                
+
+
+                Console.WriteLine("----------------------------------------");
             Console.WriteLine("`^*Welcome to Ilari's learning diary^*`´");
             Console.WriteLine("----------------------------------------");
 
@@ -29,7 +51,7 @@ namespace Learning_Diary_IK
 
 
 
-                Console.WriteLine("Press 1 to add an item to diary\nPress 2 to print whole diary\nPress 3 to search subject via ID\nPress 4 to save and exit\n press 5 to delete a topic");
+                Console.WriteLine("Press 1 to add an item to diary\nPress 2 to print whole diary\nPress 3 to search subject via ID\nPress 4 to save and exit");
 
 
                 {
@@ -42,6 +64,7 @@ namespace Learning_Diary_IK
                         diaryEntrys.Add(GlobalID, kysymykset());
                         
                             GlobalID++;
+
                             break;
                         
                             
@@ -49,16 +72,50 @@ namespace Learning_Diary_IK
                         case "2":
                             Console.Clear();
 
-                            int inputCounter = 1;
-                            foreach (int i in diaryEntrys.Keys)
+
+
+                            foreach (int i in diaryEntrysModels.Keys)
                             {
 
-                                Topic haku = null;
+                                Models.Topic haku = null;
 
-                                diaryEntrys.TryGetValue(i, out haku);
+                                diaryEntrysModels.TryGetValue(i, out haku);
 
                                 Console.WriteLine("---------------------------------------------");
-                                Console.WriteLine("Tässä listan {0} kaikki inputit", inputCounter);
+
+                                Console.WriteLine("ID = {0}\n" +
+                                    "Title = {1}\n"
+                                    + "Description = {2}\n"
+                                    + "ETA to master = {3}\n"
+                                    + "Time Spent = {4}\n"
+                                    + "Source = {5}\n"
+                                    + "Start time = {6}\n"
+                                    + "In progress = {7}\n"
+
+                                    , haku.Id, haku.Title, haku.Description, haku.TimeToMaster, haku.TimeSpent
+                                    , haku.Source, haku.StartLearningDate.ToString(), haku.InProgres);
+
+                                if (haku.InProgres == false)
+                                    Console.WriteLine("CompletionDate = " + haku.Completion.ToString());
+
+
+
+                                //writeToFile(haku.Id, haku.Title, haku.Description, haku.TimeToMaster, haku.TimeSpent
+                                  //  , haku.Source, haku.StartLearningDate, haku.InProgres, haku.Completion);
+
+
+
+                            }
+
+                                foreach (int s in diaryEntrys.Keys)
+                            {
+
+                                 Topic haku = null;
+
+                                diaryEntrys.TryGetValue(s, out haku);
+
+                                Console.WriteLine("---------------------------------------------");
+                                
                                 Console.WriteLine("ID = {0}\n" +
                                     "Title = {1}\n"
                                     + "Description = {2}\n"
@@ -79,7 +136,7 @@ namespace Learning_Diary_IK
                                 writeToFile(haku.Id, haku.Title, haku.Description, haku.EstimatedTimeToMaster, haku.TimeSpent
                                     , haku.Source, haku.StartLearningDate, haku.inProgress, haku.CompletionDate);
 
-                                inputCounter++;
+                                
 
                             }
 
@@ -89,7 +146,40 @@ namespace Learning_Diary_IK
                             
                             //Search by Id or by Title
                         case "3":
-                            Console.WriteLine("Do you want to search by 1:ID or 2:Title");
+
+                            //tallenna koko roska databaseen ja hae sieltä
+                            using (var LearningDiary = new LearningDiaryContext())
+                            {
+                                //Jokaiselle tällä kerralla luodulle topicille tehdään tallennus
+                                foreach (var item in diaryEntrys)
+                                {
+                                    Models.Topic s = new Models.Topic();
+                                    Topic y = null;
+                                    diaryEntrys.TryGetValue(item.Key, out y);
+
+                                    s.Id = y.Id;
+                                    s.Title = y.Title;
+                                    s.Description = y.Description;
+                                    s.TimeToMaster = y.EstimatedTimeToMaster;
+                                    s.Source = y.Source;
+                                    s.StartLearningDate = y.StartLearningDate;
+                                    s.InProgres = y.inProgress;
+                                    s.Completion = y.CompletionDate;
+
+
+
+                                    //uusi lisäys
+                                    LearningDiary.Topics.Add(s);
+
+                                }
+                                //tee tallennus databaseen
+                                LearningDiary.SaveChanges();
+
+                                //tyhjennä diaryEntrys dictionary
+                                diaryEntrys.Clear();
+                            }
+
+                                Console.WriteLine("Do you want to search by 1:ID or 2:Title");
                             string input2 = Console.ReadLine();
 
                             switch (input2)
@@ -140,27 +230,39 @@ namespace Learning_Diary_IK
 
                         case "4":
 
-                            //tähän tulee databasen tallennus
+                            
 
                             using (var LearningDiary = new LearningDiaryContext())
                             {
                                 //Jokaiselle tällä kerralla luodulle topicille tehdään tallennus
                                 foreach (var item in diaryEntrys)
                                 {
-                                    Topic s = null;
-                                    diaryEntrys.TryGetValue(item.Key, out s);
+                                    Models.Topic s = new Models.Topic();
+                                    Topic y = null;
+                                    diaryEntrys.TryGetValue(item.Key, out y);
+
+                                    s.Id = y.Id;
+                                    s.Title = y.Title;
+                                    s.Description = y.Description;
+                                    s.TimeToMaster = y.EstimatedTimeToMaster;
+                                    s.Source = y.Source;
+                                    s.StartLearningDate = y.StartLearningDate;
+                                    s.InProgres = y.inProgress;
+                                     s.Completion = y.CompletionDate;
+                                    
+                                    
 
 
-                                    //tee tietokantaolioita ja lisäile niitä
+
                                     //uusi lisäys
                                     LearningDiary.Topics.Add(s);
-                                     
+                                    
 
                                     //update
 
                                 }
-                                //ongelmana tuplat
-                                //tarkista ID:llä onko Id:tä jo tietokannassa, jos ID, tee update jos ei, uusi input
+                                LearningDiary.SaveChanges();
+                                
                             }
 
 
@@ -247,8 +349,11 @@ namespace Learning_Diary_IK
             Console.WriteLine("Enter in progress?(1 = yes 2= no): ");
 
 
-
+            
             string answer = Console.ReadLine();
+            
+            DateTime date1 = new DateTime(2222,2,2);
+
             if (answer == "2")
             {
                 mytopic.inProgress = false;
@@ -259,9 +364,10 @@ namespace Learning_Diary_IK
                 {
                     try
                     {
-                        DateTime date1 = Convert.ToDateTime(Console.ReadLine());
-                        mytopic.CompletionDate = date1;
+                        date1 = Convert.ToDateTime(Console.ReadLine());
+
                         Console.WriteLine(date1.ToShortDateString());
+                        mytopic.CompletionDate = date1;
                         p = true;
                     }
                     catch (Exception)
@@ -270,10 +376,14 @@ namespace Learning_Diary_IK
 
                     }
                 }
+
             }
 
             else if (answer == "1")
+            {
+                mytopic.CompletionDate = date1;
                 mytopic.inProgress = true;
+            }
 
             else
                 mytopic.inProgress = false;
@@ -314,8 +424,10 @@ namespace Learning_Diary_IK
 
         public static void searchById(int search)
         {
-            Topic s = null;
-            diaryEntrys.TryGetValue(search, out s);
+
+            //Search with an ID
+            Models.Topic s = new Models.Topic();
+            diaryEntrysModels.TryGetValue(search, out s);
 
             Console.WriteLine("---------------------------------------------");
             Console.WriteLine("Tässä haetun Id:n {0}, mukaiset tiedot", search);
@@ -328,13 +440,15 @@ namespace Learning_Diary_IK
                 + "Start time = {6}\n"
                 + "In progress = {7}\n"
 
-                , s.Id, s.Title, s.Description, s.EstimatedTimeToMaster, s.TimeSpent
-                , s.Source, s.StartLearningDate.ToShortDateString(), s.inProgress);
+                , s.Id, s.Title, s.Description, s.TimeToMaster, s.TimeSpent
+                , s.Source, s.StartLearningDate.ToString(), s.InProgres);
 
-            if (s.inProgress == false)
-                Console.WriteLine("CompletionDate = " + s.CompletionDate.ToShortDateString());
+            if (s.InProgres == false)
+                Console.WriteLine("CompletionDate = " + s.Completion.ToString());
 
 
+
+            //Edit or remove object after search
             Console.Write("Press 1 to edit topic and 2 to delete a topic: ");
             
             var inputti = Console.ReadKey();
@@ -359,55 +473,109 @@ namespace Learning_Diary_IK
                         Console.Write("Enter a new ID: ");
                         int newID = int.Parse(Console.ReadLine());
                         s.Id = newID;
-                        //korvaa s-classista id
+
+                        using (var LearningDiary = new LearningDiaryContext())
+                        {
+                            LearningDiary.Topics.Update(s);
+                            LearningDiary.SaveChanges();
+
+                        }
                         break;
 
                     case 1:
                         Console.WriteLine("Enter a new title: ");
                         string newTitle = Console.ReadLine();
                         s.Title = newTitle;
+                        using (var LearningDiary = new LearningDiaryContext())
+                        {
+                            LearningDiary.Topics.Update(s);
+                            LearningDiary.SaveChanges();
+
+                        }
                         break;
                         
                     case 2:
                         Console.WriteLine("Enter a new description: ");
                         string newDesc = Console.ReadLine();
                         s.Description = newDesc;
+                        using (var LearningDiary = new LearningDiaryContext())
+                        {
+                            LearningDiary.Topics.Update(s);
+                            LearningDiary.SaveChanges();
+
+                        }
                         break;
                         
                     case 3:
                         Console.WriteLine("Enter a eta tom master: ");
                         int newETA = int.Parse(Console.ReadLine());
-                        s.EstimatedTimeToMaster = newETA; 
+                        s.TimeToMaster = newETA;
+                        using (var LearningDiary = new LearningDiaryContext())
+                        {
+                            LearningDiary.Topics.Update(s);
+                            LearningDiary.SaveChanges();
+
+                        }
                         break;
                         
                     case 4:
                         Console.WriteLine("Enter a new Time spent: ");
                         int newTimeSpent = int.Parse(Console.ReadLine());
                         s.TimeSpent = newTimeSpent;
+                        using (var LearningDiary = new LearningDiaryContext())
+                        {
+                            LearningDiary.Topics.Update(s);
+                            LearningDiary.SaveChanges();
+
+                        }
                         break;
                         
                     case 5:
                         Console.WriteLine("Enter a new Source: ");
                         string newSource = Console.ReadLine();
                         s.Source = newSource;
+                        using (var LearningDiary = new LearningDiaryContext())
+                        {
+                            LearningDiary.Topics.Update(s);
+                            LearningDiary.SaveChanges();
+
+                        }
                         break;
                         
                     case 6:
                         Console.WriteLine("Enter a new Start time: ");
                         DateTime newStart = DateTime.Parse(Console.ReadLine());
                         s.StartLearningDate = newStart;
+                        using (var LearningDiary = new LearningDiaryContext())
+                        {
+                            LearningDiary.Topics.Update(s);
+                            LearningDiary.SaveChanges();
+
+                        }
                         break;
                         
                     case 7:
                         Console.WriteLine("Enter a new value to in progress: ");
                         bool newInProg = bool.Parse(Console.ReadLine());
-                        s.inProgress = newInProg;
+                        s.InProgres = newInProg;
+                        using (var LearningDiary = new LearningDiaryContext())
+                        {
+                            LearningDiary.Topics.Update(s);
+                            LearningDiary.SaveChanges();
+
+                        }
                         break;
                         
                     case 8:
                         Console.WriteLine("Enter a new completion date: ");
                         DateTime newEnd = DateTime.Parse(Console.ReadLine());
-                        s.CompletionDate = newEnd;
+                        s.Completion = newEnd;
+                        using (var LearningDiary = new LearningDiaryContext())
+                        {
+                            LearningDiary.Topics.Update(s);
+                            LearningDiary.SaveChanges();
+
+                        }
                         break;
 
 
@@ -417,6 +585,12 @@ namespace Learning_Diary_IK
             if (inputti.KeyChar == '2')
             {
                 diaryEntrys.Remove(search);
+                diaryEntrysModels.Remove(search);
+                using (var LearningDiary = new LearningDiaryContext())
+                {
+                    LearningDiary.Topics.Remove(s);
+                    LearningDiary.SaveChanges();
+                }
             }
             
                 
@@ -424,14 +598,14 @@ namespace Learning_Diary_IK
 
         public static void searchByTitle(string search)
         {
-            
+            //Titlestä ID:ksi käännös ei toimi
             IdTitlePairs.TryGetValue(search, out int s);
 
             Console.ReadLine();
 
 
-            Topic t = null;
-            diaryEntrys.TryGetValue(s, out t);
+            Models.Topic t = new Models.Topic();
+            diaryEntrysModels.TryGetValue(s, out t);
 
             Console.WriteLine("---------------------------------------------");
             Console.WriteLine("Tässä haetun Titlen {0}, mukaiset tiedot", search);
@@ -444,11 +618,157 @@ namespace Learning_Diary_IK
                 + "Start time = {6}\n"
                 + "In progress = {7}\n"
 
-                , t.Id, t.Title, t.Description, t.EstimatedTimeToMaster, t.TimeSpent
-                , t.Source, t.StartLearningDate.ToShortDateString(), t.inProgress);
+                , t.Id, t.Title, t.Description, t.TimeToMaster, t.TimeSpent
+                , t.Source, t.StartLearningDate.ToString(), t.InProgres);
 
-            if (t.inProgress == false)
-                Console.WriteLine( "CompletionDate = " + t.CompletionDate.ToShortDateString());
+            if (t.InProgres == false)
+                Console.WriteLine( "CompletionDate = " + t.Completion.ToString());
+
+            //Edit or remove object after search
+            Console.Write("Press 1 to edit topic and 2 to delete a topic: ");
+
+            var inputti = Console.ReadKey();
+            if (inputti.KeyChar == '1')
+            {
+                Console.Clear();
+                Console.WriteLine("Enter a subject to change:");
+                Console.WriteLine("ID: 0\n" +
+            "Title: 1\n"
+            + "Description: 2\n"
+            + "ETA to master: 3\n"
+            + "Time Spent: 4\n"
+            + "Source: 5\n"
+            + "Start time: 6\n"
+            + "In progress: 7\n"
+            + "CompletionDate: 8");
+                int subject = int.Parse(Console.ReadLine());
+
+                //Lisää tähän päivitys serverille
+
+                switch (subject)
+                {
+                    case 0:
+                        Console.Write("Enter a new ID: ");
+                        int newID = int.Parse(Console.ReadLine());
+                        t.Id = newID;
+                        
+                        using (var LearningDiary = new LearningDiaryContext())
+                        {
+                            LearningDiary.Topics.Update(t);
+                            LearningDiary.SaveChanges();
+
+                        }
+
+
+                        break;
+
+                    case 1:
+                        Console.WriteLine("Enter a new title: ");
+                        string newTitle = Console.ReadLine();
+                        t.Title = newTitle;
+                        using (var LearningDiary = new LearningDiaryContext())
+                        {
+                            LearningDiary.Topics.Update(t);
+                            LearningDiary.SaveChanges();
+
+                        }
+                        break;
+
+                    case 2:
+                        Console.WriteLine("Enter a new description: ");
+                        string newDesc = Console.ReadLine();
+                        t.Description = newDesc;
+                        using (var LearningDiary = new LearningDiaryContext())
+                        {
+                            LearningDiary.Topics.Update(t);
+                            LearningDiary.SaveChanges();
+
+                        }
+                        break;
+
+                    case 3:
+                        Console.WriteLine("Enter a eta tom master: ");
+                        int newETA = int.Parse(Console.ReadLine());
+                        t.TimeToMaster = newETA;
+                        using (var LearningDiary = new LearningDiaryContext())
+                        {
+                            LearningDiary.Topics.Update(t);
+                            LearningDiary.SaveChanges();
+
+                        }
+                        break;
+
+                    case 4:
+                        Console.WriteLine("Enter a new Time spent: ");
+                        int newTimeSpent = int.Parse(Console.ReadLine());
+                        t.TimeSpent = newTimeSpent; using (var LearningDiary = new LearningDiaryContext())
+                        {
+                            LearningDiary.Topics.Update(t);
+                            LearningDiary.SaveChanges();
+
+                        }
+                        break;
+
+                    case 5:
+                        Console.WriteLine("Enter a new Source: ");
+                        string newSource = Console.ReadLine();
+                        t.Source = newSource; using (var LearningDiary = new LearningDiaryContext())
+                        {
+                            LearningDiary.Topics.Update(t);
+                            LearningDiary.SaveChanges();
+
+                        }
+                        break;
+
+                    case 6:
+                        Console.WriteLine("Enter a new Start time: ");
+                        DateTime newStart = DateTime.Parse(Console.ReadLine());
+                        t.StartLearningDate = newStart; using (var LearningDiary = new LearningDiaryContext())
+                        {
+                            LearningDiary.Topics.Update(t);
+                            LearningDiary.SaveChanges();
+
+                        }
+                        break;
+
+                    case 7:
+                        Console.WriteLine("Enter a new value to in progress: ");
+                        bool newInProg = bool.Parse(Console.ReadLine());
+                        t.InProgres = newInProg;
+                        using (var LearningDiary = new LearningDiaryContext())
+                        {
+                            LearningDiary.Topics.Update(t);
+                            LearningDiary.SaveChanges();
+
+                        }
+                        break;
+
+                    case 8:
+                        Console.WriteLine("Enter a new completion date: ");
+                        DateTime newEnd = DateTime.Parse(Console.ReadLine());
+                        t.Completion = newEnd;
+                        using (var LearningDiary = new LearningDiaryContext())
+                        {
+                            LearningDiary.Topics.Update(t);
+                            LearningDiary.SaveChanges();
+
+                        }
+                        break;
+
+
+                }
+            }
+
+            if (inputti.KeyChar == '2')
+            {
+                diaryEntrys.Remove(s);
+                diaryEntrysModels.Remove(s);
+                using (var LearningDiary = new LearningDiaryContext())
+                {
+                    LearningDiary.Topics.Remove(t);
+                    LearningDiary.SaveChanges();
+                }
+            }
 
 
 
@@ -456,7 +776,10 @@ namespace Learning_Diary_IK
 
         }
 
-       
+       public static void dataBaseToProgram()
+        {
+
+        }
       
         }
     }

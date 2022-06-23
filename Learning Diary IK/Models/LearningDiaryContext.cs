@@ -24,7 +24,7 @@ namespace Learning_Diary_IK.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=localhost;DataBase=LearningDiary;trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=localhost;Database=LearningDiary;Trusted_Connection=True;");
             }
         }
 
@@ -34,9 +34,9 @@ namespace Learning_Diary_IK.Models
 
             modelBuilder.Entity<Topic>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("Topic");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Completion).HasColumnType("datetime");
 
@@ -53,7 +53,6 @@ namespace Learning_Diary_IK.Models
                 entity.Property(e => e.StartLearningDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Title)
-                    .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);
             });

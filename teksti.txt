@@ -189,3 +189,34 @@ Source = www
 Start learning date = 11/12/2000 
 inProgress = True
 
+------------------
+ID = 1 
+Title = title 
+Description = seuraava entry 
+ETA to master = 5 
+Time Spent = 4 
+Source = www.netti.fi 
+Start learning date = 12/02/2000 
+inProgress = True
+
+------------------
+ID = 2 
+Title = fffff 
+Description = fffff 
+ETA to master = 6 
+Time Spent = 5 
+Source = yyyy 
+Start learning date = 12/05/2099 
+inProgress = True
+
+------------------
+ID = 3 
+Title = tt 
+Description = ss 
+ETA to master = 3 
+Time Spent = 5 
+Source = www 
+Start learning date = 11/07/2007 
+inProgress = False 
+CompletionDate = 20/07/2008
+
