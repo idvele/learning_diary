@@ -595,13 +595,13 @@ namespace Learning_Diary_IK
             
                 
         }
-
+        //search wit title
         public static void searchByTitle(string search)
         {
-            //Titlestä ID:ksi käännös ei toimi
+            //Titlestä ID:ksi käännös ei toimi databasen olioiden osalta
             IdTitlePairs.TryGetValue(search, out int s);
 
-            Console.ReadLine();
+            
 
 
             Models.Topic t = new Models.Topic();
