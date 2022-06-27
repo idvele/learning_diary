@@ -53,7 +53,7 @@ namespace Learning_Diary_IK
 
 
 
-                Console.WriteLine("Press 1 to add an item to diary\nPress 2 to print whole diary\nPress 3 to search subject via ID\nPress 4 to save and exit");
+                Console.WriteLine("Press 1 to add an item to diary\nPress 2 to print whole diary\nPress 3 to search subject via ID or title\nPress 4 to save and exit");
 
 
                 {
