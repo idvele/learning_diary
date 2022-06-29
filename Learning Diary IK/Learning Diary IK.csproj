@@ -14,4 +14,13 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="ClassLibrary1">
+      <HintPath>..\..\..\ClassLibrary2\ClassLibrary1\bin\Debug\netcoreapp3.1\ClassLibrary1.dll</HintPath>
+    </Reference>
+    <Reference Include="classTest">
+      <HintPath>..\..\..\ClassLibrary\classTest\bin\Debug\netcoreapp3.1\classTest.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

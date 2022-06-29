@@ -220,3 +220,36 @@ Start learning date = 11/07/2007
 inProgress = False 
 CompletionDate = 20/07/2008
 
+------------------
+ID = 4 
+Title = late title 
+Description = Im late 
+ETA to master = 20 
+Time Spent = 200 
+Source = www.late.fi 
+Start learning date = 12/02/2002 
+inProgress = False 
+CompletionDate = 02/05/2004
+
+------------------
+ID = 6 
+Title = Keskviikon title 
+Description = joujouojumjoujoujou 
+ETA to master = 99 
+Time Spent = 12 
+Source = wikipedia.fi 
+Start learning date = 12/12/2000 
+inProgress = False 
+CompletionDate = 01/01/0001
+
+------------------
+ID = 8 
+Title = 5 
+Description = 5 
+ETA to master = 5 
+Time Spent = 5 
+Source = 5 
+Start learning date = 05/05/2000 
+inProgress = False 
+CompletionDate = 05/05/2005
+
