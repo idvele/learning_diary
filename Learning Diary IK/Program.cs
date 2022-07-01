@@ -4,7 +4,8 @@ using System.IO;
 using System.Linq;
 using Learning_Diary_IK.Models;
 using ClassLibrary1;
-
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Learning_Diary_IK
 {
@@ -17,25 +18,32 @@ namespace Learning_Diary_IK
 
         static void Main(string[] args)
         {
-            //Tähän tulee databasen lataus
-            using (var LearningDiary = new LearningDiaryContext())
+            //Tähän tulee databasen lataus asynkronisesti
+
+            new Thread(() =>
             {
-                var taulu = LearningDiary.Topics.Max(topikki => topikki.Id);
-
-                //Lasketaan missä ID:ssä mennään
-                GlobalID = taulu;
-                GlobalID++;
-
-                //Kaikki tietokannassa olevat objektit lisätään diaryEntrysModels-dictionaryyn
-                var kaikki = LearningDiary.Topics;
-
-                foreach (var topic in kaikki)
+                using (var LearningDiary = new LearningDiaryContext())
                 {
-                    diaryEntrysModels.Add(topic.Id, topic);
-                    IdTitlePairs.Add(topic.Title, topic.Id);
-                    
+                    var taulu = LearningDiary.Topics.Max(topikki => topikki.Id);
+
+                    //Lasketaan missä ID:ssä mennään
+                    GlobalID = taulu;
+                    GlobalID++;
+
+                    //Kaikki tietokannassa olevat objektit lisätään diaryEntrysModels-dictionaryyn
+                    var kaikki =LearningDiary.Topics;
+
+                    foreach (var topic in kaikki)
+                    {
+                        diaryEntrysModels.Add(topic.Id, topic);
+                        IdTitlePairs.Add(topic.Title, topic.Id);
+
+                    }
                 }
-            }
+            }).Start();
+                
+            
+            
 
            
 
@@ -191,8 +199,10 @@ namespace Learning_Diary_IK
 
                                 }
                                 //tee tallennus databaseen
-                                LearningDiary.SaveChanges();
-
+                               
+                                
+                                //Tallennus tehdään asynkronisesti
+                                LearningDiary.SaveChangesAsync();
                                 //tyhjennä diaryEntrys dictionary
                                 diaryEntrys.Clear();
                             }
