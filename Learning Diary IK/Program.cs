@@ -6,6 +6,8 @@ using Learning_Diary_IK.Models;
 using ClassLibrary1;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace Learning_Diary_IK
 {
@@ -16,7 +18,7 @@ namespace Learning_Diary_IK
         public static Dictionary<int, Models.Topic> diaryEntrysModels = new Dictionary<int, Models.Topic>();
         public static Dictionary<string, int> IdTitlePairs = new Dictionary<string, int>();
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             //Tähän tulee databasen lataus asynkronisesti
 
@@ -61,11 +63,12 @@ namespace Learning_Diary_IK
             {
 
 
-
+                //miksi vitsin jälkeen printtautuu kahdesti?
                 Console.WriteLine("Press 1 to add an item to diary\n" +
                     "Press 2 to print whole diary\n" +
                     "Press 3 to search subject via ID or title\n" +
-                    "Press 4 to save and exit");
+                    "Press 4 to save and exit\n"+
+                    "Press 5 to hear a joke");
 
 
                 {
@@ -297,7 +300,14 @@ namespace Learning_Diary_IK
 
                             break;
 
-                       
+                        case "5":
+
+                            await TellAJoke();
+                            System.Threading.Thread.Sleep(1000);
+
+
+                            break;
+
 
                     }
                 }
@@ -926,7 +936,40 @@ namespace Learning_Diary_IK
         }
 
       
-      
+      public static async Task TellAJoke()
+        {
+            Console.WriteLine("---------------------------\n");
+            Joke randomJoke = await GetJoke();
+            if (randomJoke.type == "single")
+            {
+                Console.WriteLine(randomJoke.joke);
+            }
+            else
+            {
+                Console.WriteLine(randomJoke.setup);
+                System.Threading.Thread.Sleep(3000);
+                Console.WriteLine(randomJoke.delivery);
+            }
+            Console.Read();
+            Console.Clear();
+        }
+        public async static Task<Joke> GetJoke()
+        {
+            const string url = "https://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw,racist,sexist";
+            Joke randomJoke;
+
+            using (var httpClient = new HttpClient())
+            {
+                var json = await httpClient.GetStringAsync(url);
+                randomJoke = JsonConvert.DeserializeObject<Joke>(json);
+            }
+
+            return randomJoke;
+
+
+        }
+
+
         }
     }
     
