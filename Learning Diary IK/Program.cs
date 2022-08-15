@@ -478,221 +478,225 @@ namespace Learning_Diary_IK
             //call classLibrary1
             Class1 aikataulu = new Class1();
 
-            // write the result
-            Console.WriteLine("---------------------------------------------");
-            Console.WriteLine("Tässä haetun Id:n {0}, mukaiset tiedot", search);
-            Console.WriteLine("ID = {0}\n" +
-                "Title = {1}\n"
-                + "Description = {2}\n"
-                + "ETA to master = {3}\n"
-                + "Time Spent = {4}",
-               
-                s.Id, s.Title, s.Description, s.TimeToMaster, s.TimeSpent);
-            // use classLibary1 DLL
-            aikataulu.IsLate(s.TimeToMaster, s.TimeSpent);
-
-            Console.WriteLine("Source = {0}\n"
-                + "Start time = {1}\n"
-                + "In progress = {2}\n"         
-            , s.Source, s.StartLearningDate.ToString(), s.InProgres);
-
-            if (s.InProgres == false)
-                Console.WriteLine("CompletionDate = " + s.Completion.ToString());
-
-
-
-            //Edit or remove object after search
-            Console.Write("Press 1 to edit topic and 2 to delete a topic: ");
-            
-            var inputti = Console.ReadKey();
-            if (inputti.KeyChar == '1')
+            if (s != null)
             {
-                Console.Clear();
-                Console.WriteLine("Enter a subject to change:");
-                Console.WriteLine(
-            "Title: 1\n"
-            + "Description: 2\n"
-            + "ETA to master: 3\n"
-            + "Time Spent: 4\n"
-            + "Source: 5\n"
-            + "Start time: 6\n"
-            + "In progress: 7\n"
-            + "CompletionDate: 8");
-                int subject = int.Parse(Console.ReadLine());
+                // write the result
+                Console.WriteLine("---------------------------------------------");
+                Console.WriteLine("Tässä haetun Id:n {0}, mukaiset tiedot", search);
+                Console.WriteLine("ID = {0}\n" +
+                    "Title = {1}\n"
+                    + "Description = {2}\n"
+                    + "ETA to master = {3}\n"
+                    + "Time Spent = {4}",
 
-                switch (subject)
+                    s.Id, s.Title, s.Description, s.TimeToMaster, s.TimeSpent);
+                // use classLibary1 DLL
+                aikataulu.IsLate(s.TimeToMaster, s.TimeSpent);
+
+                Console.WriteLine("Source = {0}\n"
+                    + "Start time = {1}\n"
+                    + "In progress = {2}\n"
+                , s.Source, s.StartLearningDate.ToString(), s.InProgres);
+
+                if (s.InProgres == false)
+                    Console.WriteLine("CompletionDate = " + s.Completion.ToString());
+                //Edit or remove object after search
+                Console.Write("Press 1 to edit topic and 2 to delete a topic: ");
+
+                var inputti = Console.ReadKey();
+                if (inputti.KeyChar == '1')
                 {
-                    //case 0:
-                    //    Console.Write("Enter a new ID: ");
-                    //    int newID = int.Parse(Console.ReadLine());
-                    //    s.Id = newID;
+                    Console.Clear();
+                    Console.WriteLine("Enter a subject to change:");
+                    Console.WriteLine(
+                "Title: 1\n"
+                + "Description: 2\n"
+                + "ETA to master: 3\n"
+                + "Time Spent: 4\n"
+                + "Source: 5\n"
+                + "Start time: 6\n"
+                + "In progress: 7\n"
+                + "CompletionDate: 8");
+                    int subject = int.Parse(Console.ReadLine());
 
-                    //    using (var LearningDiary = new LearningDiaryContext())
-                    //    {
-                    //        LearningDiary.Topics.Update(s);
-                    //        LearningDiary.SaveChanges();
+                    switch (subject)
+                    {
+                        //case 0:
+                        //    Console.Write("Enter a new ID: ");
+                        //    int newID = int.Parse(Console.ReadLine());
+                        //    s.Id = newID;
 
-                    //    }
-                    //    break;
+                        //    using (var LearningDiary = new LearningDiaryContext())
+                        //    {
+                        //        LearningDiary.Topics.Update(s);
+                        //        LearningDiary.SaveChanges();
 
-                    case 1:
-                        Console.WriteLine("Enter a new title: ");
-                        string newTitle = Console.ReadLine();
-                        s.Title = newTitle;
-                        using (var LearningDiary = new LearningDiaryContext())
-                        {
-                            LearningDiary.Topics.Update(s);
-                            LearningDiary.SaveChanges();
+                        //    }
+                        //    break;
 
-                        }
-                        break;
-                        
-                    case 2:
-                        Console.WriteLine("Enter a new description: ");
-                        string newDesc = Console.ReadLine();
-                        s.Description = newDesc;
-                        using (var LearningDiary = new LearningDiaryContext())
-                        {
-                            LearningDiary.Topics.Update(s);
-                            LearningDiary.SaveChanges();
-
-                        }
-                        break;
-                        
-                    case 3:
-                        Console.WriteLine("Enter a eta to master: ");
-
-                        try
-                        {
-                            int newETA = int.Parse(Console.ReadLine());
-                            s.TimeToMaster = newETA;
+                        case 1:
+                            Console.WriteLine("Enter a new title: ");
+                            string newTitle = Console.ReadLine();
+                            s.Title = newTitle;
                             using (var LearningDiary = new LearningDiaryContext())
                             {
                                 LearningDiary.Topics.Update(s);
                                 LearningDiary.SaveChanges();
 
                             }
-                        }
-                        catch (Exception)
-                        {
-                            Console.WriteLine("Not cool!");
-                            
-                        }
-                       
-                        break;
-                        
-                    case 4:
-                        try
-                        {
-                            Console.WriteLine("Enter a new Time spent: ");
-                            int newTimeSpent = int.Parse(Console.ReadLine());
-                            s.TimeSpent = newTimeSpent;
+                            break;
+
+                        case 2:
+                            Console.WriteLine("Enter a new description: ");
+                            string newDesc = Console.ReadLine();
+                            s.Description = newDesc;
                             using (var LearningDiary = new LearningDiaryContext())
                             {
                                 LearningDiary.Topics.Update(s);
                                 LearningDiary.SaveChanges();
 
                             }
-                        }
-                        catch (Exception)
-                        {
+                            break;
 
-                            Console.WriteLine("Wrong format");
-                        }
+                        case 3:
+                            Console.WriteLine("Enter a eta to master: ");
 
-                        break;
-                        
-                    case 5:
-                        Console.WriteLine("Enter a new Source: ");
-                        string newSource = Console.ReadLine();
-                        s.Source = newSource;
-                        using (var LearningDiary = new LearningDiaryContext())
-                        {
-                            LearningDiary.Topics.Update(s);
-                            LearningDiary.SaveChanges();
+                            try
+                            {
+                                int newETA = int.Parse(Console.ReadLine());
+                                s.TimeToMaster = newETA;
+                                using (var LearningDiary = new LearningDiaryContext())
+                                {
+                                    LearningDiary.Topics.Update(s);
+                                    LearningDiary.SaveChanges();
 
-                        }
-                        break;
-                        
-                    case 6:
-                        Console.WriteLine("Enter a new Start time: ");
-                        try
-                        {
-                            
-                            DateTime newStart = DateTime.Parse(Console.ReadLine());
-                            s.StartLearningDate = newStart;
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("Not cool!");
+
+                            }
+
+                            break;
+
+                        case 4:
+                            try
+                            {
+                                Console.WriteLine("Enter a new Time spent: ");
+                                int newTimeSpent = int.Parse(Console.ReadLine());
+                                s.TimeSpent = newTimeSpent;
+                                using (var LearningDiary = new LearningDiaryContext())
+                                {
+                                    LearningDiary.Topics.Update(s);
+                                    LearningDiary.SaveChanges();
+
+                                }
+                            }
+                            catch (Exception)
+                            {
+
+                                Console.WriteLine("Wrong format");
+                            }
+
+                            break;
+
+                        case 5:
+                            Console.WriteLine("Enter a new Source: ");
+                            string newSource = Console.ReadLine();
+                            s.Source = newSource;
                             using (var LearningDiary = new LearningDiaryContext())
                             {
                                 LearningDiary.Topics.Update(s);
                                 LearningDiary.SaveChanges();
 
                             }
-                        }
-                        catch (Exception)
-                        {
+                            break;
 
-                            Console.WriteLine("Wrong format!");
-                        }
-                     
-                        break;
-                        
-                    case 7:
-                        try
-                        {
-                            Console.WriteLine("Enter a new value to in progress: ");
-                            bool newInProg = bool.Parse(Console.ReadLine());
-                            s.InProgres = newInProg;
-                            using (var LearningDiary = new LearningDiaryContext())
+                        case 6:
+                            Console.WriteLine("Enter a new Start time: ");
+                            try
                             {
-                                LearningDiary.Topics.Update(s);
-                                LearningDiary.SaveChanges();
 
+                                DateTime newStart = DateTime.Parse(Console.ReadLine());
+                                s.StartLearningDate = newStart;
+                                using (var LearningDiary = new LearningDiaryContext())
+                                {
+                                    LearningDiary.Topics.Update(s);
+                                    LearningDiary.SaveChanges();
+
+                                }
                             }
-                        }
-                        catch (Exception)
-                        {
-
-                            Console.WriteLine("Wrong format");
-                        }
-                        
-                        break;
-                        
-                    case 8:
-                        Console.WriteLine("Enter a new completion date: ");
-                        try
-                        {
-                            DateTime newEnd = DateTime.Parse(Console.ReadLine());
-                            s.Completion = newEnd;
-                            using (var LearningDiary = new LearningDiaryContext())
+                            catch (Exception)
                             {
-                                LearningDiary.Topics.Update(s);
-                                LearningDiary.SaveChanges();
 
+                                Console.WriteLine("Wrong format!");
                             }
-                        }
-                        catch (Exception)
-                        {
 
-                            Console.WriteLine("Wrong format");
-                        }
-                       
-                        break;
+                            break;
+
+                        case 7:
+                            try
+                            {
+                                Console.WriteLine("Enter a new value to in progress: ");
+                                bool newInProg = bool.Parse(Console.ReadLine());
+                                s.InProgres = newInProg;
+                                using (var LearningDiary = new LearningDiaryContext())
+                                {
+                                    LearningDiary.Topics.Update(s);
+                                    LearningDiary.SaveChanges();
+
+                                }
+                            }
+                            catch (Exception)
+                            {
+
+                                Console.WriteLine("Wrong format");
+                            }
+
+                            break;
+
+                        case 8:
+                            Console.WriteLine("Enter a new completion date: ");
+                            try
+                            {
+                                DateTime newEnd = DateTime.Parse(Console.ReadLine());
+                                s.Completion = newEnd;
+                                using (var LearningDiary = new LearningDiaryContext())
+                                {
+                                    LearningDiary.Topics.Update(s);
+                                    LearningDiary.SaveChanges();
+
+                                }
+                            }
+                            catch (Exception)
+                            {
+
+                                Console.WriteLine("Wrong format");
+                            }
+
+                            break;
 
 
+                    }
                 }
-                }
 
-            if (inputti.KeyChar == '2')
-            {
-                diaryEntrys.Remove(search);
-                diaryEntrysModels.Remove(search);
-                using (var LearningDiary = new LearningDiaryContext())
+                if (inputti.KeyChar == '2')
                 {
-                    LearningDiary.Topics.Remove(s);
-                    LearningDiary.SaveChanges();
+                    diaryEntrys.Remove(search);
+                    diaryEntrysModels.Remove(search);
+                    using (var LearningDiary = new LearningDiaryContext())
+                    {
+                        LearningDiary.Topics.Remove(s);
+                        LearningDiary.SaveChanges();
+                    }
                 }
+
             }
-            
+            else
+                Console.WriteLine("Not found");
+            Console.Read();
+        
                 
         }
         //search with title
