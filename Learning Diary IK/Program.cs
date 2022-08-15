@@ -304,7 +304,9 @@ namespace Learning_Diary_IK
 
                             await TellAJoke();
                             System.Threading.Thread.Sleep(1000);
-
+                            
+                            Console.Read();
+                            Console.Clear();
 
                             break;
 
@@ -960,9 +962,9 @@ namespace Learning_Diary_IK
                 Console.WriteLine(randomJoke.setup);
                 System.Threading.Thread.Sleep(3000);
                 Console.WriteLine(randomJoke.delivery);
+                
             }
-            Console.Read();
-            Console.Clear();
+            
         }
         public async static Task<Joke> GetJoke()
         {
