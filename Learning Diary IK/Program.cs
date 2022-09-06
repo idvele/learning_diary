@@ -205,7 +205,7 @@ namespace Learning_Diary_IK
                                
                                 
                                 //Tallennus tehdään asynkronisesti
-                                LearningDiary.SaveChangesAsync();
+                                await LearningDiary.SaveChangesAsync();
                                 //tyhjennä diaryEntrys dictionary
                                 diaryEntrys.Clear();
                             }
